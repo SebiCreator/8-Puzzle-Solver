@@ -1,6 +1,9 @@
 package puzzle8;
 
+import java.awt.*;
 import java.util.*;
+import java.util.List;
+
 
 /**
  * Klasse Board für 8-Puzzle-Problem
@@ -8,6 +11,8 @@ import java.util.*;
  */
 public class Board {
 
+	private static final String ANSI_BLUE = "\u001B[34m";
+	public static final String ANSI_RESET = "\u001B[0m";
 	/**
 	 * Problmegröße
 	 */
@@ -210,15 +215,46 @@ public class Board {
 		}
 		System.out.println("\n");
 	}
+
+	 //TODO: Colored Changes
+	void niceBoard(Board old){
+		List<Integer> changed = new ArrayList<>();
+		for(int i=0; i < N+1; i++){
+			if(this.board[i] != old.board[i]){
+				changed.add(i);
+			}
+		}
+		System.out.print("\n|---|---|---|\n|");
+		for(int i=0; i < 9; i++){
+			if(changed.contains(i)){
+				System.out.print(ANSI_BLUE);
+				System.out.printf(" %s ",dont0(this.board[i]));
+				System.out.print(ANSI_RESET);
+				System.out.print("|");
+			} else{
+				System.out.printf(" %s |",dont0(this.board[i]));
+			}
+			if(i == 2 || i == 5){
+				System.out.print("\n|---|---|---|\n|");
+			}
+			if(i == 8){
+				System.out.print("\n|---|---|---|");
+			}
+		}
+		System.out.println("\n\n");
+	}
+
+
+
 	
 	
 	public static void main(String[] args) {
 		Board b = new Board(new int[]{7,2,4,5,0,6,8,3,1});		// abc aus Aufgabenblatt
 		Board goal = new Board(new int[]{0,1,2,3,4,5,6,7,8});
 
-
-		b.niceBoard();
-		goal.niceBoard();
+		for(var e: b.possibleActions()){
+		    e.niceBoard(b);
+		}
 
 
 

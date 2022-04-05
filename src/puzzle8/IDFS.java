@@ -38,6 +38,7 @@ public class IDFS {
 	
 	private static Deque<Board> idfs(Board curBoard, Deque<Board> path) {
 		for (int limit = 5; limit < 100; limit++) {
+			System.out.println("Maximum Limit ==> " + limit);
 			Deque<Board> result = dfs(curBoard,path,limit);
 			if (result != null)
 				return result;
