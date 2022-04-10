@@ -38,6 +38,8 @@ public class Board {
 			int r = rand.nextInt(possible.size());
 			this.board[i] = possible.remove(r);
 		}
+
+
 	}
 	
 	/**

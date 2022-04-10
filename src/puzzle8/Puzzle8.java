@@ -28,9 +28,11 @@ public class Puzzle8 {
 		} */
 
 		Board last = null;
+		int i=0;
 		for(var e: res){
 			Board curr = e;
 			if(last != null){
+				System.out.printf("---- Runde %s von %s ----\n", ++i, res.size());
 				curr.niceBoard(last);
 			}
 			last = curr;
@@ -49,7 +51,7 @@ public class Puzzle8 {
 
 
 	public static void main(String[] args) {
-		testIDFS();
+		testAStar();
 	}
 
 }
