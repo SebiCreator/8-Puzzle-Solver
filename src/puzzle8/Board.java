@@ -254,9 +254,9 @@ public class Board {
 		Board b = new Board(new int[]{7,2,4,5,0,6,8,3,1});		// abc aus Aufgabenblatt
 		Board goal = new Board(new int[]{0,1,2,3,4,5,6,7,8});
 
-		for(var e: b.possibleActions()){
-		    e.niceBoard(b);
-		}
+
+		System.out.println(b.h2());
+		System.out.println(goal.h2());
 
 
 
