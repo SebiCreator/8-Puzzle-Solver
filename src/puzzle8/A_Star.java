@@ -27,9 +27,10 @@ public class A_Star {
 			if(closedList.contains(e)){
 				continue;
 			}
-			if(!cost.containsKey(e)){
-				cost.put(e,0);
+			if(!cost.containsKey(current)){
+				cost.put(current,0);
 			}
+
 
 			int nextG = cost.get(current) + e.h1();
 
@@ -37,8 +38,17 @@ public class A_Star {
 				continue;
 			}
 
-			pred.replace(e,current);
-			cost.replace(e,nextG);
+			if (!pred.containsKey(e)){
+				pred.put(e,current);
+			} else{
+				pred.replace(e,current);
+			}
+
+			if (!cost.containsKey(e)){
+				cost.put(e,nextG);
+			} else {
+				cost.replace(e,nextG);
+			}
 
 			if (openList.get(e) != null){
 				openList.change(e,nextG);
@@ -55,9 +65,11 @@ public class A_Star {
 		while(!openList.isEmpty()){
 			Board current = openList.removeMin();
 			if(current.isSolved()){
+				System.out.println("Found");
 				Deque<Board> path = new LinkedList<>();
-				for(var r=pred.get(current); pred.get(r) == null ;r = pred.get(r)){
-					path.add(r);
+				while (current != null){
+					path.add(current);
+					current = pred.get(current);
 				}
 				return path;
 			}

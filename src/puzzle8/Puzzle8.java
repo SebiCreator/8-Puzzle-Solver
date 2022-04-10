@@ -42,6 +42,7 @@ public class Puzzle8 {
 
 	public static void testAStar() {
 		Board b = new Board(); // Loesbares Puzzle b zufällig genrieren.
+		//Board b = new Board(new int[]{0,2,1,3,4,5,6,8,7});
 		System.out.println(b);
 		Deque<Board> res = A_Star.aStar(b);
 		int n = res == null ? -1 : res.size();
