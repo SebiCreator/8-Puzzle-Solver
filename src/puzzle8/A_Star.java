@@ -1,9 +1,6 @@
 package puzzle8;
 
-import java.util.Deque;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.LinkedList;
+import java.util.*;
 
 /**
  * @author Sebastian Kaeser
@@ -71,12 +68,14 @@ public class A_Star {
 
 
     public static Deque<Board> aStar(Board startBoard, int heu) {
+        openList.clear();
+        pred.clear();
+        cost.clear();
         openList.add(startBoard, 0);
 
         while (!openList.isEmpty()) {
             Board current = openList.removeMin();
             if (current.isSolved()) {
-                System.out.println("Found");
                 Deque<Board> path = new LinkedList<>();
                 while (current != null) {
                     path.add(current);
@@ -87,7 +86,52 @@ public class A_Star {
             closedList.add(current);
             expandBoard(current, heu);
         }
-        System.out.println("Nix");
         return null; // Keine Lösung
+    }
+
+    public static Deque<Board> aStar2(Board startBoard){
+        if (startBoard.isSolved()){
+            return new LinkedList<>();
+        }
+        pred.clear();
+        cost.clear();
+        openList.clear();
+
+        openList.add(startBoard,0);
+        pred.put(startBoard,null);
+        cost.put(startBoard,0);
+        while(!openList.isEmpty()){
+            Board curr = openList.removeMin();
+            if(curr.isSolved()){
+                System.out.println("Found");
+                var result = new LinkedList<Board>();
+                result.add(curr);
+                while(pred.get(curr) != null){
+                    result.add(pred.get(curr));
+                    curr = pred.get(curr);
+                }
+                Collections.reverse(result);
+                return result;
+            }
+            expand2(curr);
+        }
+        return null;
+    }
+
+    static void expand2(Board curr){
+        for(var e: curr.possibleActions()){
+            if(!cost.containsKey(e)) {
+                cost.put(e, cost.get(curr) + 1);
+                openList.add(e, cost.get(e) + e.h1());
+                pred.put(e, curr);
+                return;
+            }
+            if((cost.get(curr) + 1) < (cost.get(e))){
+                pred.put(e,curr);
+                cost.replace(e,cost.get(curr) + 1);
+                openList.change(e,cost.get(e) + e.h1());
+                return;
+            }
+        }
     }
 }

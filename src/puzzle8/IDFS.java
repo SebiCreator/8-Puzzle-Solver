@@ -26,18 +26,22 @@ public class IDFS {
 				continue;
 			}
 			path.add(e);
-			if (dfs(e,path,limit-1) != null){
-				return path;
+			Deque<Board> res = dfs(e,path,limit-1);
+			if(res != null){
+				return res;
 			}
-			path.removeLast();
+
+			path.remove(e);
 
 		}
 
 		return null;
 	}
+
+
 	
 	private static Deque<Board> idfs(Board curBoard, Deque<Board> path) {
-		for (int limit = 5; limit < 100; limit++) {
+		for (int limit = 5; limit < 30; limit++) {
 			System.out.println("Maximum Limit ==> " + limit);
 			Deque<Board> result = dfs(curBoard,path,limit);
 			if (result != null)

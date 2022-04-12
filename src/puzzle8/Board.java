@@ -255,12 +255,8 @@ public class Board {
 		Board goal = new Board(new int[]{0,1,2,3,4,5,6,7,8});
 
 
-		System.out.println(b.h2());
-		System.out.println(goal.h2());
-
-
-
-
+		System.out.println(b.parity());
+		System.out.println(goal.parity());
 
 //		System.out.println(b);
 //		System.out.println(b.parity());
