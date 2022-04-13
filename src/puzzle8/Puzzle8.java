@@ -1,7 +1,9 @@
 package puzzle8;
 
 import java.awt.*;
+import java.util.Collections;
 import java.util.Deque;
+import java.util.List;
 
 /**
  * Hauptprogramm für 8-Puzzle-Problem.
@@ -12,60 +14,20 @@ import java.util.Deque;
 
 public class Puzzle8 {
 
-	public static void testIDFS() {
-		Board b = new Board(); // Loesbares Puzzle b zufällig genrieren.
-		System.out.println(b);
-
-
-		var res = IDFS.idfs(b);
-		int n = res == null ? -1 : res.size();
-		System.out.println("Anz.Zuege: " + n + ": " + res);
-		/*
-		int i = 1;
-		for (var e : res) {
-			System.out.printf("---- Runde %s von %s ----\n", i++, res.size());
-			e.niceBoard();
-		} */
-
+	public static void printNice(Deque<Board> results){
+	    if (results == null){
+			System.out.println("---- Kein Ergebnis! ----");
+		}
 		Board last = null;
-		int i=0;
-		for(var e: res){
+		int i = 0;
+		for(var e: results){
 			Board curr = e;
 			if(last != null){
-				System.out.printf("---- Runde %s von %s ----\n", ++i, res.size());
+				System.out.printf("---- Runde %s von %s  ----\n",++i,results.size()-1);
 				curr.niceBoard(last);
 			}
 			last = curr;
 		}
-
-	}
-
-	public static void testAStar() {
-		Board b = new Board(); // Loesbares Puzzle b zufällig genrieren.
-		//Board b = new Board(new int[]{7,2,4,5,0,6,8,3,1});		// abc aus Aufgabenblatt
-		System.out.println(b);
-
-		int heuris = 1;
-		var res = A_Star.aStar(b,heuris);
-		if (res == null) {
-			return;
-		}
-		System.out.println("-------Heurisk: " + heuris + "---------" );
-		System.out.println("Züge: " + res.size());
-		for(var e: res){
-			e.niceBoard();
-		}
-
-		/*System.out.println("--------- H 1 --------");
-		Deque<Board> res = A_Star.aStar(b,1);
-		int n = res == null ? -1 : res.size();
-		System.out.println("Anz.Zuege: " + n + ": " + res);
-
-		System.out.println("--------- H 2 --------");
-		Deque<Board> res2 = A_Star.aStar(b,2);
-		int n2 = res2 == null ? -1 : res2.size();
-		System.out.println("Anz.Zuege: " + n2 + ": " + res2);*/
-
 	}
 
 
@@ -86,7 +48,7 @@ public class Puzzle8 {
 		}
 
 		var res2 = A_Star.aStar(b,1);
-		System.out.println("----AStar(1)----");
+		System.out.println("\n----AStar(1)----");
 		if(res2 != null){
 			System.out.println("Steps: " + res2.size());
 			System.out.println(res2);
@@ -95,7 +57,7 @@ public class Puzzle8 {
 		}
 
 		var res3 = A_Star.aStar(b,2);
-		System.out.println("----AStar(2)----");
+		System.out.println("\n----AStar(2)----");
 		if(res3 != null){
 			System.out.println("Steps: " + res3.size());
 			System.out.println(res3);
@@ -103,24 +65,11 @@ public class Puzzle8 {
 			System.out.println("Null for AStar2");
 		}
 
-		var res4 = A_Star.aStar2(b);
-		System.out.println("----AStar2----");
-		if (res4 != null){
-			System.out.println("Steps: " + res4.size());
-			System.out.println(res4);
-		} else {
-			System.out.println("Null for AStarV2");
-		}
-
-
-
-
-
 	}
 
 
 	public static void main(String[] args) {
-		testIDFS();
+	    comparison();
 	}
 
 }

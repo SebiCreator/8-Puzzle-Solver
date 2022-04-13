@@ -30,14 +30,16 @@ public class Board {
 	 * Generiert ein zufälliges Board.
 	 */
 	public Board() {
-		List<Integer> possible = new ArrayList<>(
-				List.of(0,1,2,3,4,5,6,7,8)
-		);
-		Random rand = new Random();
-		for(int i=0; i < N+1; i++){
-			int r = rand.nextInt(possible.size());
-			this.board[i] = possible.remove(r);
-		}
+		Integer arr[] = {0,1,2,3,4,5,6,7,8};
+		List<Integer> list = Arrays.asList(arr);
+
+		do {
+			Collections.shuffle(list);
+			for(int i=0; i< N+1; i++){
+				board[i] = list.get(i);
+			}
+		} while(!this.parity());
+
 
 
 	}
@@ -50,6 +52,10 @@ public class Board {
 	    assert(board.length == N+1);
 		for(int i=0; i <N+1; i++){
 			this.board[i] = board[i];
+		}
+		if(!this.parity()){
+			System.out.println("Wrong Parity, try with another Board");
+			return;
 		}
 	}
 
@@ -88,7 +94,13 @@ public class Board {
 	public boolean parity() {
 		int counter = 0;
 		for(int i=0; i < this.board.length; i++){
-			for(int j=i; j < this.board.length; j++){
+			if(this.board[i] == 0){
+				continue;
+			}
+			for(int j=i+1; j < this.board.length; j++){
+				if(this.board[j] == 0){
+					continue;
+				}
 				if (this.board[j] < this.board[i]){
 					counter ++;
 				}
@@ -253,20 +265,9 @@ public class Board {
 	public static void main(String[] args) {
 		Board b = new Board(new int[]{7,2,4,5,0,6,8,3,1});		// abc aus Aufgabenblatt
 		Board goal = new Board(new int[]{0,1,2,3,4,5,6,7,8});
+		Board test = new Board();
 
-
-		System.out.println(b.parity());
-		System.out.println(goal.parity());
-
-//		System.out.println(b);
-//		System.out.println(b.parity());
-//		System.out.println(b.h1());
-//		System.out.println(b.h2());
-//
-//		for (Board child : b.possibleActions())
-//			System.out.println(child);
-//
-//		System.out.println(goal.isSolved());
+		System.out.println(test);
 	}
 }
 	
